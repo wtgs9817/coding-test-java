@@ -3,15 +3,11 @@ class Solution {
     public long solution(long n) {
         long answer = 0;
         
-        double result = Math.sqrt(n);
-        int result02 = (int) result;
-        
-        if(result % result02 !=0 ) {
-            answer = -1;
+        if(Math.pow((int) Math.sqrt(n),2) == n) {
+            answer = (long) Math.pow(Math.sqrt(n)+1, 2);
         }
-        
         else {
-            answer = (long) Math.pow(result+1, 2);
+            answer = -1;
         }
         
         return answer;
