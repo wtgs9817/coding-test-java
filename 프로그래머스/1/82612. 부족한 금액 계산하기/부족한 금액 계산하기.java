@@ -1,20 +1,20 @@
 class Solution {
     public long solution(int price, int money, int count) {
-        long answer = 0;
-
-        int n = 2;
+        
+        long result =0;
         
         for(int i=1; i<=count; i++) {
-            answer += price * i;
-            
-            
-        }
-        answer -= money;
-        
-        if(answer <= 0) {
-            answer = 0;
+            result += price*i;
         }
         
-        return answer;
+        if(money < result) {
+            return result - money;
+        }
+        
+        else {
+            return 0;
+        }
+        
+        
     }
 }
