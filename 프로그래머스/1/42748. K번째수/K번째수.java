@@ -1,3 +1,4 @@
+//두번째 풀이
 import java.util.Arrays;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
