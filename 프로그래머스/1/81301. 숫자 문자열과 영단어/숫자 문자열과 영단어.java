@@ -19,7 +19,7 @@ class Solution {
         
         
         for(String key : map.keySet()) {
-            s = s.replace(key, map.get(key));
+            s = s.replace(key, map.get(key));  // replace -> (변경하려는 값, 새로운 값);
         }
         int answer = Integer.parseInt(s);
         
