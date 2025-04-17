@@ -1,17 +1,18 @@
+//2번째 풀이
 import java.util.Scanner;
 
 class Solution {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         
-        int sc1 = scan.nextInt();
-        int sc2 = scan.nextInt();
+        int a = scan.nextInt();
+        int b = scan.nextInt();
         
-        for(int i =0; i<sc2; i++) {
-            for(int k =0; k<sc1; k++) {
+        for(int i=0; i<b; i++) {
+            for(int k=0; k<a; k++) {
                 System.out.print("*");
             }
-            System.out.println();
+            System.out.println();           
         }
         
 
