@@ -1,10 +1,10 @@
-//첫번째 풀이 다시 풀어보기
+//두번째 풀이 
 
 import java.util.*;
 class Solution {
     public int solution(String s) {
-        
         Map<String, String> map = new HashMap<String, String>();
+        
         map.put("zero", "0");
         map.put("one", "1");
         map.put("two", "2");
@@ -16,13 +16,14 @@ class Solution {
         map.put("eight", "8");
         map.put("nine", "9");
         
-    
+        
+        
         for(String key : map.keySet()) {
             s = s.replace(key, map.get(key));
         }
-        
         int answer = Integer.parseInt(s);
         
         return answer;
+        
     }
 }
