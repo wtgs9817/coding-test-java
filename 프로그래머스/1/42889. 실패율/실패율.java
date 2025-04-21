@@ -28,6 +28,7 @@ class Solution {
         
         List<Integer> list = new ArrayList<Integer>(map.keySet());
         
+        //정렬 여전히 바로바로 생각이 안남 좀 연습이 필요함
         list.sort((a1, a2) -> {
            int result = Double.compare(map.get(a2), map.get(a1));
             
