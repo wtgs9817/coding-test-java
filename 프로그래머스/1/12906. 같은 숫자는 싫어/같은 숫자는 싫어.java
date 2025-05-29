@@ -1,19 +1,25 @@
+//두번째 풀이
 import java.util.*;
 
 public class Solution {
+    
     public int[] solution(int []arr) {
-        
         List<Integer> list = new ArrayList<>();
         
-        for(int i =0; i<arr.length; i++) {
-        
-            if(i==0 || arr[i-1] != arr[i]) {
-                list.add(arr[i]);        
+        for(int i=0; i<arr.length; i++) {
+            if(list.isEmpty() || list.get(list.size()-1) != arr[i]) {
+                list.add(arr[i]);
             }
         }
         
-        int[] answer = list.stream().mapToInt(x -> x).toArray();
-        return answer;
-               
+        int[] result = new int[list.size()];
+        int cnt =0;
+        
+        for(int a : list) {
+            result[cnt++] = a;
+        }
+        
+        return result;
+           
     }
 }
