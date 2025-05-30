@@ -1,10 +1,10 @@
+//첫번째 풀이 다음 풀이는 자료구조를 생각하며 풀어보자 
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         int[] arr = new int[speeds.length];
         List<Integer> list = new ArrayList<>();
-        int flag =-1;
         
         int front = 0;
         int count = 1;
