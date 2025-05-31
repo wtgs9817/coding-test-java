@@ -3,12 +3,15 @@ class Solution {
     boolean solution(String s) {
         boolean answer = true;
         Queue<Character> que = new LinkedList<>();
+        Stack<Character> stk = new Stack<>();
         
+        int cnt = 0;
+        /*
         for(int i=0; i<s.length(); i++) {
             que.add(s.charAt(i));
         }
         
-        int cnt = 0;
+        
         for(int i=0; i<s.length(); i++) {
             if(que.poll() == '('){
                 cnt++;
@@ -28,7 +31,27 @@ class Solution {
         if(cnt != 0 ) { 
             answer = false;
         }    
-            
+        
+        */
+        
+        for(char c : s.toCharArray()) {
+            if(c == '(') {
+                stk.push(c);
+            }
+            else {
+                if(stk.isEmpty()) {
+                    answer = false;
+                    break;
+                }
+                stk.pop();
+            }
+        }
+        
+        if(!stk.isEmpty()) {
+            answer = false;
+        }
+        
+        
         
           
         
