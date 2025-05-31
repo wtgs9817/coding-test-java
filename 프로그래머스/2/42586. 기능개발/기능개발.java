@@ -4,6 +4,9 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         int[] arr = new int[speeds.length];
+        
+        /*
+        
         List<Integer> list = new ArrayList<>();
         
         int front = 0;
@@ -33,8 +36,38 @@ class Solution {
             answer[count] = a;
             count++;
         }
+    
+        return answer;
+        */
+        
+        Queue<Integer> que = new LinkedList<>();
+        List<Integer> list = new ArrayList<>();
         
         
+        
+        
+        for(int i=0; i<speeds.length; i++) {
+            int num = 100 - progresses[i];
+            arr[i] = (num + speeds[i]-1) / speeds[i];
+            
+            if(!que.isEmpty() && que.peek() < arr[i]) {
+                list.add(que.size());
+                que.clear();
+            }
+            
+            que.offer(arr[i]);
+            
+            
+            }
+        
+        list.add(que.size());
+        
+        
+        int[] answer = new int[list.size()];
+        int cnt = 0;
+        for(int a : list) {
+            answer[cnt++] = a; 
+        }
         
         return answer;
     }
