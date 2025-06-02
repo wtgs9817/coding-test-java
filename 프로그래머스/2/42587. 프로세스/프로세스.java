@@ -2,6 +2,7 @@ import java.util.*;
 
 //첫번째 다시 풀어봐야 할 듯
 //두번째 풀이 - 해답을 안보고 맞췄지만 문제 좀 똑바로 읽어야 할 듯. 뻘짓거리로 시간 낭비함.
+//두번째 풀이 - 현재 복잡도면에서 코드가 별로임. 다른 풀이들 보면서 공부 후 다시 풀기
 class Solution {
     public int solution(int[] priorities, int location) {
         int answer = 0;
