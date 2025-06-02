@@ -5,10 +5,51 @@ import java.util.*;
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
-        Queue<Character> que = new LinkedList<>();
+        //Queue<Character> que = new LinkedList<>();
         Stack<Character> stk = new Stack<>();
         
         int cnt = 0;
+        
+        for(int i=0; i<s.length(); i++) {
+            
+            char a = s.charAt(i);
+            
+            if(a == '(') {
+                answer =true;
+                cnt++;
+                stk.push(a);
+            }
+            
+            else {
+                if(cnt <= 0) {
+                    answer = false;
+                    break;
+                }
+                else {
+                    stk.pop();
+                    cnt--;   
+                }
+            }            
+        }
+        
+        if(cnt != 0) {
+            answer = false;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /*
         for(int i=0; i<s.length(); i++) {
             que.add(s.charAt(i));
@@ -36,7 +77,7 @@ class Solution {
         }    
         
         */
-        
+        /*
         for(char c : s.toCharArray()) {
             if(c == '(') {
                 stk.push(c);
@@ -56,7 +97,7 @@ class Solution {
         
         
         
-          
+          */
         
         // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
         System.out.println("Hello Java");
