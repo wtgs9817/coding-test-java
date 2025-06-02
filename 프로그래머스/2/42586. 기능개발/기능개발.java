@@ -1,10 +1,54 @@
 //첫번째 풀이 다음 풀이는 자료구조를 생각하며 풀어보자
 // 두번째 풀이 큐를 이용해서 풀어봄
+//세번째 풀이도 큐로 품
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        int[] arr = new int[speeds.length];
+        List<Integer> list = new ArrayList<>();
+        Queue<Integer> que = new LinkedList<>();
+        int cnt = 1;
+        
+        
+        for(int i=0; i<speeds.length; i++) {
+            int x = (100 - progresses[i] + speeds[i] -1) / speeds[i];
+            
+            if(!que.isEmpty() ) {
+                if(que.peek() >= x) {
+                    cnt++;
+                }
+                else {
+                    list.add(cnt);
+                    cnt = 1;
+                    que.clear();
+                }
+                
+            }
+            que.add(x);
+            
+        }
+        
+        list.add(cnt);
+        int idx = 0;
+        
+        int[] answer = new int[list.size()];
+        for(int a : list) {
+            answer[idx] = a;
+            idx++;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         /*
         
@@ -40,7 +84,7 @@ class Solution {
     
         return answer;
         */
-        
+        /*
         Queue<Integer> que = new LinkedList<>();
         List<Integer> list = new ArrayList<>();
         
@@ -69,7 +113,8 @@ class Solution {
         for(int a : list) {
             answer[cnt++] = a; 
         }
-        
+    */    
         return answer;
     }
+    
 }
