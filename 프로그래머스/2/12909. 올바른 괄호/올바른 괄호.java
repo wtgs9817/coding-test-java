@@ -1,6 +1,6 @@
 //첫번째 큐로 풀이
 //두번째 스택으로 풀이
-
+//세번째 풀이도 스택
 import java.util.*;
 class Solution {
     boolean solution(String s) {
