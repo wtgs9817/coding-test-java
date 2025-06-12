@@ -1,5 +1,5 @@
 import java.util.*;
-
+//두번째 풀이
 /*
 문제설명
 n초 간의 주가를 초 단위로 기록한 배열 prices가 매개변수로 주어질 때, 각 초의 주가를 기준으로 해당 초 부터 n초 사이에 가격이 떨어지지 않은 시간은 몇 초인지 배열에 담아 return 하도록 solution 함수를 완성하세요.
@@ -23,6 +23,38 @@ return : [4, 3, 1, 1, 0]
 
 class Solution {
     public int[] solution(int[] prices) {
+        
+        Stack<Integer> stk = new Stack<>();
+        int[] answer = new int[prices.length];
+        int n = prices.length;
+        for(int i=0; i<n; i++) {
+            
+            while(!stk.isEmpty() && prices[i] < prices[stk.peek()] ) {
+                int idx = stk.pop();
+                answer[idx] = i - idx;
+            }
+            
+            stk.push(i);
+        }
+        
+        while(!stk.isEmpty()) {
+            int idx = stk.pop();
+            answer[idx] = n - 1 - idx; 
+        }
+        
+        return answer;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
         int[] answer = new int[prices.length];
         Stack<Integer> stk = new Stack<>();
         int n = prices.length;
@@ -44,5 +76,7 @@ class Solution {
             }
         
         return answer;
+        
+        */
     }
 }
