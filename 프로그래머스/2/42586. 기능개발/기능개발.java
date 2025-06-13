@@ -1,10 +1,64 @@
 //첫번째 풀이 다음 풀이는 자료구조를 생각하며 풀어보자
 // 두번째 풀이 큐를 이용해서 풀어봄
 //세번째 풀이도 큐로 품
+//네번째 풀이 디큐
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        List<Integer> list = new ArrayList<>();
+        int n = speeds.length;
+        int cnt = 1;
+        
+        for(int i=0; i<n; i++) {
+            int num = 100 - progresses[i];
+            int result = (num + speeds[i] -1) / speeds[i];
+            if(!deque.isEmpty()) {
+                if(deque.peekFirst() >= result) {
+                    cnt++;
+                }
+                else {
+                    deque.clear();
+                    list.add(cnt);
+                    cnt = 1;
+                }
+            }    
+            deque.addLast(result);
+        }
+        
+        list.add(cnt);
+        
+        int[] answer = new int[list.size()];
+        int count = 0;
+        for(int a : list) {
+            answer[count] = a;
+            count++;
+        }
+        
+       // return answer;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        
         List<Integer> list = new ArrayList<>();
         Queue<Integer> que = new LinkedList<>();
         int cnt = 1;
@@ -38,7 +92,7 @@ class Solution {
         }
         
         
-        
+        */
         
         
         
@@ -113,7 +167,7 @@ class Solution {
         for(int a : list) {
             answer[cnt++] = a; 
         }
-    */    
+      */  
         return answer;
     }
     
