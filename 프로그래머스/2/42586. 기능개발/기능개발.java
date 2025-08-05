@@ -2,10 +2,47 @@
 // 두번째 풀이 큐를 이용해서 풀어봄
 //세번째 풀이도 큐로 품
 //네번째 풀이 디큐
+//다섯번째 풀이
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
+        Deque<Integer> que = new ArrayDeque<>();
+        List<Integer> list = new ArrayList<>();
+        
+     
+        for(int i=0; i<speeds.length; i++) {
+            int n1 = (100 - progresses[i]);
+            
+            int result = (n1 + speeds[i]-1) / speeds[i];
+            
+            if(que.isEmpty() || que.peekFirst() >= result) {
+                que.addLast(result);
+            }
+            else {
+                list.add(que.size());
+                que.clear();
+                
+                que.addLast(result);
+            }
+        }
+        
+        list.add(que.size());
+        
+        int[] answer = new int[list.size()];
+        
+        int cnt = 0;
+        for(int n : list) {
+            answer[cnt++] = n;
+        }
+        
+        return answer;
+        
+        
+        
+        
+        /*
+        
         Deque<Integer> deque = new ArrayDeque<>();
         List<Integer> list = new ArrayList<>();
         int n = speeds.length;
@@ -39,7 +76,7 @@ class Solution {
        // return answer;
         
         
-        
+        */
         
         
         
@@ -167,8 +204,9 @@ class Solution {
         for(int a : list) {
             answer[cnt++] = a; 
         }
-      */  
+        
         return answer;
+    */
     }
     
 }
