@@ -2,9 +2,62 @@
 //뭔가 중간중간 조온나 헷갈림. 
 //다시 풀어봐야 할듯.
 
+//두번째 풀이
+
 import java.util.*;
 class Solution {
     public int[] solution(String msg) {
+        Map<String, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        
+        int idx = 0;
+        int idx2 = 0;
+        int count = 1;
+        for(char ch='A'; ch<='Z'; ch++) {
+            map.put(String.valueOf(ch), count++);
+        }
+        
+        while(idx < msg.length() ) {
+            idx2 = idx + 1;
+            
+        
+            while(idx2 <= msg.length() && map.containsKey(msg.substring(idx, idx2)) ) {
+                idx2++;
+                
+            }
+            
+            //현재 찾은 가장 긴 문자열 넣기
+            list.add(map.get(msg.substring(idx, idx2-1)));
+            
+            if(idx2 <= msg.length()) {
+                map.put(msg.substring(idx, idx2), count++);    
+            }
+            
+            
+            idx = idx2 - 1;    
+        
+            
+        }
+        
+        int[] answer = new int[list.size()];
+        int cnt = 0;
+        for(int n : list) {
+            answer[cnt] = n;
+            cnt++;
+        }
+        
+        return answer;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
         Map<String, Integer> map = new HashMap<>();
         List<Integer> list = new ArrayList<>();
         
@@ -39,5 +92,6 @@ class Solution {
         
       
         return answer;
+        */
     }
 }
