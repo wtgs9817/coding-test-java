@@ -2,12 +2,13 @@
 //3번째 풀이  
 //4번째 풀이
 class Solution {
-    public int solution(int[][] sizes) {
+    
+        public int solution(int[][] sizes) {
         int maxWidth = Math.max(sizes[0][0], sizes[0][1]);
         int maxHeight = Math.min(sizes[0][0], sizes[0][1]);
         
         
-        for(int i=0; i<sizes.length; i++) {
+        for(int i=1; i<sizes.length; i++) {
             int max = Math.max(sizes[i][0], sizes[i][1]);
             int minMax = Math.min(sizes[i][0], sizes[i][1]);
             
