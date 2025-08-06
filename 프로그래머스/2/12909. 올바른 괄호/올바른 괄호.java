@@ -1,43 +1,9 @@
 //첫번째 큐로 풀이
 //두번째 스택으로 풀이
 //세번째 풀이도 스택
-//네번째 풀이
 import java.util.*;
 class Solution {
     boolean solution(String s) {
-        Stack<Character> stk = new Stack<>();
-        boolean answer = false;
-        for(int i=0; i<s.length(); i++) {
-            if(s.charAt(i) == '(') {
-                stk.push(s.charAt(i));
-            }
-            else {
-                if(stk.isEmpty()) {
-                    answer = false;
-                    break;
-                }
-                stk.pop();
-                answer = true;
-            }            
-        }
-        
-        if(!stk.isEmpty()) {
-            answer = false;
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*
         boolean answer = true;
         //Queue<Character> que = new LinkedList<>();
         Stack<Character> stk = new Stack<>();
@@ -70,7 +36,6 @@ class Solution {
             answer = false;
         }
         
-        */
         
         
         
