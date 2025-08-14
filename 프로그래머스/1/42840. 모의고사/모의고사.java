@@ -4,7 +4,6 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] answers) {
         int[][] s = {{1,2,3,4,5},{2,1,2,3,2,4,2,5},{3,3,1,1,2,2,4,4,5,5}};
-        Map<Integer, Integer> map = new HashMap<>();
         List<Integer> list = new ArrayList<>();
         int[] score = new int[s.length];
         
