@@ -1,6 +1,47 @@
 //첫번째 풀이 꼭 다시 풀어보기
-
+//두번째 풀이  
 class Solution {
+    int n;
+    int[][] computers;
+    boolean[] visited;
+    
+    public int solution(int n, int[][] computers) {
+        this.n = n;
+        this.computers = computers;
+        this.visited = new boolean[n];
+        
+        int count = 0;
+        for(int i=0; i<n; i++) {
+            if(!visited[i]) {
+                dfs(i);
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    public void dfs(int num) {
+        visited[num] = true;
+        
+        for(int i=0; i<this.n; i++) {
+            if(this.computers[num][i] == 1 && !visited[i]) {
+                dfs(i);
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    
     int n;
     boolean[] visited;
     int[][] computers;
@@ -29,5 +70,7 @@ class Solution {
             }
         }
     }
+    
+    */
     
 }
