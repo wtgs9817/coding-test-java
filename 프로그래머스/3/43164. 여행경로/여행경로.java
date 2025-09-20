@@ -1,7 +1,60 @@
 //첫번째 풀이 - 다시 풀어보기
-
+//두번째 풀이 - 한번만 더 
 import java.util.*;
 class Solution {
+    Map<String, PriorityQueue<String>> map;
+    List<String> list;
+    
+    
+    public String[] solution(String[][] tickets) {
+        map = new HashMap<>();
+        list = new ArrayList<>();
+        
+        for(int i=0; i<tickets.length; i++) {
+            String from = tickets[i][0];
+            String to = tickets[i][1];
+            
+            if(!map.containsKey(from)) {
+                map.put(from, new PriorityQueue<>());
+            }
+            map.get(from).add(to);
+        }
+        dfs("ICN");
+        
+        Collections.reverse(list);
+        String[] answer = list.toArray(new String[0]);
+        
+        return answer;
+    }
+    
+    
+    
+    public void dfs(String airport) {
+        PriorityQueue<String> pq = map.get(airport);
+        
+        while(pq != null && !pq.isEmpty()) {
+            String ap = pq.poll();
+            dfs(ap);
+        }
+        
+        list.add(airport);   
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     Map<String, PriorityQueue<String>> graph;
     List<String> airports;
     
@@ -43,4 +96,6 @@ class Solution {
         airports.add(airport); 
         
     }
+    
+    */
 }
