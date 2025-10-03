@@ -1,8 +1,82 @@
 import java.util.*;
 //첫번째 풀이
 //두번째 풀이 다시 풀어보기 천천히 다시 생각하면서 문제 해결해보기
+//세번째
 class Solution {
+    Queue<Word> que = new ArrayDeque<>();
+    boolean[] visited;
+    int count = 0;
+    
+    
     public int solution(String begin, String target, String[] words) {
+        visited = new boolean[words.length];
+        
+        que.offer(new Word(begin, 0));
+        bfs(target, words);
+        
+        return count;     
+    }
+    
+    
+    public void bfs(String target ,String[] words) {
+        
+        while(!que.isEmpty()) {
+            Word wr = que.poll();
+            
+            String word = wr.word;
+            int depth = wr.num;
+            
+            if(target.equals(word)) {
+                this.count = depth;
+                return;
+            }
+            
+            for(int i=0; i<words.length; i++) {
+                if(!visited[i] &&check(word, words[i])) {
+                    visited[i] = true;
+                    que.offer(new Word(words[i], depth+1));                   
+                } 
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    //str -> 시작단어 / str2 -> words 안에 있는 단어
+    public boolean check(String str, String str2) {
+        int cnt = 0;
+        
+        for(int i=0; i< str2.length(); i++) {
+            if(str.charAt(i) != (str2.charAt(i))) {
+                cnt++;
+            }
+        }
+        
+        return cnt == 1;        
+    }
+        
+        
+    public class Word{
+        String word;
+        int num;
+        
+        public Word(String word, int num) {
+            this.word = word;
+            this.num = num;
+        }
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
         Queue<Word> que = new ArrayDeque<>();
         boolean[] visited = new boolean[words.length];
         int count = 0;
@@ -67,7 +141,7 @@ class Solution {
     }
     
     
-    
+    */
     
     
     
