@@ -5,6 +5,63 @@ import java.util.*;
 //두번째 풀이 - 현재 복잡도면에서 코드가 별로임. 다른 풀이들 보면서 공부 후 다시 풀기
 class Solution {
     public int solution(int[] priorities, int location) {
+        Queue<int[]> que = new ArrayDeque<>();
+        int len = priorities.length;    
+        
+        for (int i = 0; i < len; i++) {
+            que.offer(new int[]{priorities[i], i});
+        }
+
+        int answer = 0;
+        int count = 0;
+
+        while (!que.isEmpty()) {
+            int[] arr = que.poll();
+            boolean flag = true;
+
+            for (int[] num : que) {
+                if (arr[0] < num[0]) {
+                    flag = false;
+                }
+            }
+
+            if (!flag) {
+                que.offer(arr);
+            } else {
+                count++;
+
+                if (location == arr[1]) {
+                    answer = count;
+                    return answer;
+                }
+            }
+        }
+        return answer;
+    }
+    
+}
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        
         int answer = 0;
         Queue<int[]> que = new LinkedList<>();
         
@@ -40,7 +97,7 @@ class Solution {
             
         }
        
-        
+        */
         
        
         
@@ -92,6 +149,4 @@ class Solution {
             
         }    
           */  
-        return answer;
-    }
-}
+  

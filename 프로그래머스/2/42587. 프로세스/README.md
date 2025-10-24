@@ -1,10 +1,10 @@
 # [level 2] 프로세스 - 42587 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42587) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42587?utm_source=chatgpt.com) 
 
 ### 성능 요약
 
-메모리: 74.2 MB, 시간: 1.79 ms
+메모리: 80.8 MB, 시간: 4.35 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 06월 02일 09:37:12
+2025년 10월 25일 02:02:23
 
 ### 문제 설명
 
