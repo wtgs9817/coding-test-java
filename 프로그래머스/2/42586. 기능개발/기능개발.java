@@ -3,10 +3,66 @@
 //세번째 풀이도 큐로 품
 //네번째 풀이 디큐
 //다섯번째 풀이
+
+//여섯번째 풀이
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
+        Queue<Integer> que = new ArrayDeque<>();
+        int count = 1;
+        int num = (int) Math.ceil((100.0 -progresses[0])/speeds[0]); 
+        
+        que.offer(num);
+        
+        List<Integer> list = new ArrayList<>();
+        for(int i=1; i<speeds.length; i++) {
+            int arr = que.peek();
+            
+            int num2 = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
+            
+            if(arr < num2) {
+                que.poll();
+                list.add(count);
+                count = 1;
+                que.offer(num2);      
+            }
+            
+            else {
+                count++;
+            }
+        }
+        
+        list.add(count);
+        
+        
+        
+        int[] answer = new int[list.size()];
+        int cnt = 0;
+        for(int a : list) {
+            answer[cnt] = a;
+            cnt++;
+        }
+        
+        return answer;
+    }
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        
         Deque<Integer> que = new ArrayDeque<>();
         List<Integer> list = new ArrayList<>();
         
@@ -38,7 +94,7 @@ class Solution {
         
         return answer;
         
-        
+        */
         
         
         /*
@@ -207,6 +263,5 @@ class Solution {
         
         return answer;
     */
-    }
     
 }
