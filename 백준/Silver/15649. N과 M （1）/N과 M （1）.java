@@ -6,10 +6,9 @@ import java.util.StringTokenizer;
 public class Main {
 	
 	public static boolean[] visited;
-	public static int M;
-	public static int N;
+	public static int M,N;
 	public static int[] arr;
-	
+	public static StringBuilder sb  = new StringBuilder();
 	
 	
 	public static void main(String[] args)throws IOException {
@@ -24,20 +23,16 @@ public class Main {
 		arr = new int[M+1];
 		
 		dfs(0);
+		System.out.println(sb);
 		
 	}
 	
 	public static void dfs(int depth) {
 		if(depth == M) {
 			for(int i=0; i<M; i++) {
-				if(i != M-1) {
-					System.out.print(arr[i] + " ");
-				}
-				else {
-					System.out.print(arr[i]);
-				}
+				sb.append(arr[i]).append(" ");
 			}
-			System.out.println();
+			sb.append("\n");
 			return;
 		}
 		
