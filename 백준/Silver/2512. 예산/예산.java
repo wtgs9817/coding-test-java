@@ -73,7 +73,7 @@ public class Main {
 			sum += arr[i];
 			max = Math.max(max, arr[i]);
 		}
-		Arrays.sort(arr);
+		
 		
 		int budget = Integer.parseInt(br.readLine());
 		int answer = budgetCheck(arr, budget, sum, max);
