@@ -3,31 +3,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+
 public class Main {
-	public static int N,M,K,X;  //도시의 개수, 도로의 개수, 거리 정보, 출발 도시의 번호
+	public static int N;
+	
 	public static List<Integer>[] list;
-	public static int[] dist;
-	public static Queue<Integer> que = new ArrayDeque<>();
+	public static List<Integer> answer = new ArrayList<>();
 	
 	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		X = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken()); //도시의 개수
+		int M = Integer.parseInt(st.nextToken()); //도로의 개수
+		int K = Integer.parseInt(st.nextToken()); //거리 정보
+		int X = Integer.parseInt(st.nextToken()); //출발 도시 번호
 		
 		list = new ArrayList[N+1];
-		dist = new int[N+1];
 		
-		
-		for(int i=1; i<=N; i++) {
+		for(int i=1; i<N+1; i++) {
 			list[i] = new ArrayList<>();
-			dist[i] = Integer.MAX_VALUE;
 		}
-		
 		
 		for(int i=0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -35,36 +32,43 @@ public class Main {
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			
-			list[a].add(b);
+			list[a].add(b);		
 		}
 		
-		search(X);
-		boolean flag = false;
-		for(int i=1; i<=N; i++) {
-			if(dist[i] == K) {
-				flag = true;
-				System.out.println(i);
-			}
-		}
+		search(K,X);
+		Collections.sort(answer);
 		
-		if(!flag) System.out.println(-1);
-	
+		if(answer.isEmpty()) System.out.println(-1);
+		
+		for(int num  : answer) {
+			System.out.println(num);
+		}
 		
 	}
 	
-	public static void search(int x) {
-		que.offer(x);
-		dist[x] = 0;
+	public static void search(int k, int x) {
+		Queue<int[]> que = new ArrayDeque<>();
+		boolean[] visited = new boolean[N+1];
+		que.offer(new int[] {0,x});
+		visited[x] = true;
 		
 		while(!que.isEmpty()) {
-			int end = que.poll();
+			int[] arr = que.poll();
+			int cost = arr[0];
+			int end = arr[1];
 			
-			for(int a : list[end]) {
-				if(dist[a] > 1 + dist[end]) {
-					dist[a] = 1+dist[end];
-					que.offer(a);
-				}
+			
+			if(cost == k) {
+				answer.add(end);
+				continue;
 			}
+	
+			for(int a : list[end]) {
+				if(!visited[a]) {
+					visited[a] = true;
+					que.offer(new int[] {cost+1, a});
+				}			
+			}				
 		}
 	}
 
