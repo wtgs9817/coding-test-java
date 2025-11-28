@@ -3,26 +3,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-	
-	public static void main(String[] args) throws IOException {
-	
+	public static void main(String[] args)throws IOException {
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int answer = Integer.parseInt(br.readLine());
+		int N = Integer.parseInt(br.readLine());
+		int a = 666;
+		int count = 0;
 		
-		
-		int cnt = 1;
-		
-		int num = 666;
-		while(cnt != answer) {
-			num+=1;
-			String str = String.valueOf(num);
-			
-			if(str.contains("666")) {
-				cnt++;
+		int answer = 0;
+		while(true) {
+			if(String.valueOf(a).contains("666")) {
+				count++;
+				if(count == N) {
+					answer = a;
+					break;
+				}
 			}
+			a++;
 		}
-	
-		System.out.println(num);
+		
+		System.out.println(answer);
+
+		
 	}
+
 }
