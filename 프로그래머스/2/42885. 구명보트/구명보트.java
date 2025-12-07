@@ -1,22 +1,27 @@
 import java.util.*;
+
+//두번째 풀이
 class Solution {
     public int solution(int[] people, int limit) {
         int answer = 0;
+        Arrays.sort(people);
         
         int left = 0;
         int right = people.length-1;
-        Arrays.sort(people);
         
         while(left <= right) {
-            if(people[left] + people[right] <= limit) {
+            int weight = people[left] + people[right];
+            
+            if(weight <= limit) {
                 left++;
+                right--;
+            }
+            else {
+                right--;
             }
             
-            right--;
             answer++;
-        }
-        
-        
+        }      
         return answer;
     }
         
