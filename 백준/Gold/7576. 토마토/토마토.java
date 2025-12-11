@@ -24,7 +24,6 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		
 		int[][] tomatoes = new int[N][M];
-		boolean[][] visited = new boolean[N][M];
 		Queue<int[]> que = new ArrayDeque<>();
 		
 		
@@ -44,7 +43,6 @@ public class Main {
 			int y = loc[0];
 			int x = loc[1];
 			
-			visited[y][x] = true;
 			
 			for(int i=0; i<4; i++) {
 				int dx = x + X[i];
@@ -52,8 +50,7 @@ public class Main {
 				
 				if(dx < 0 || dx >= M || dy < 0 || dy >= N) continue;
 				
-				if(!visited[dy][dx] && tomatoes[dy][dx] == 0) {
-					visited[dy][dx] = true;
+				if(tomatoes[dy][dx] == 0) {
 					tomatoes[dy][dx] = tomatoes[y][x] + 1;
 					que.offer(new int[] {dy, dx});
 				}
