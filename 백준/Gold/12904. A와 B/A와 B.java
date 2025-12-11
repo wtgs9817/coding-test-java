@@ -2,39 +2,44 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
-	//조건을 잘봐야 함. 절대로 정방향으로는 못품
+public class Main {  //다시 풀어보기
 	
 	public static void main(String[] args)throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String s = br.readLine();
-		String t = br.readLine();
+		String S = br.readLine();
+		String T = br.readLine();
 		
-		int answer = 0;
-		
+		boolean flag = false;
 		StringBuilder sb = new StringBuilder();
-		sb.append(t);
+		sb.append(T);
 		
-		while(s.length() < sb.length()) {
-			if(sb.charAt(sb.length()-1) == 'A') {  
-				sb.deleteCharAt(sb.length()-1);
+		int idx = T.length()-1;
+		while(idx >= 0) {
+			
+			if(String.valueOf(sb).equals(S)) {
+				flag = true;
+				break;
 			}
 			
-			else if(sb.charAt(sb.length()-1) == 'B') {
-				sb.deleteCharAt(sb.length()-1);
+			if(sb.charAt(idx) == 'A') {
+				sb.deleteCharAt(idx);
+			}
+			
+			else {
+				sb.deleteCharAt(idx);
 				sb.reverse();
 			}
+			
+			idx--;
 		}
+			
 		
-		if(String.valueOf(sb).equals(s)) {
-			System.out.println(1);
-		}
+		if(flag) System.out.println(1);
+		else System.out.println(0);
 		
-		else {
-			System.out.println(0);
-		}
+		
 	}
 
 }
