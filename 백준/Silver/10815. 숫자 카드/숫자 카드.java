@@ -28,6 +28,7 @@ public class Main {
 		
 		int M = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		
 		for(int i=0; i<M; i++) {
 			int left = 0;
@@ -47,9 +48,10 @@ public class Main {
 				else if(arr[mid] > num) right = mid - 1;
 			}
 			
-			if(flag) System.out.print(1 + " ");
-			else System.out.print(0 + " ");
+			sb.append(flag ? 1:0).append(" ");
 		}
+		
+		System.out.println(sb);
 	}
 
 }
