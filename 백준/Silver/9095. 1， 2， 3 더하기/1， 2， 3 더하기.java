@@ -2,28 +2,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+//복습
 public class Main {
+	static int[] dp = new int[11];
+	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int T = Integer.parseInt(br.readLine());
+		arr();
+		for(int i=0; i<T; i++) {
+			int n = Integer.parseInt(br.readLine());
+			
+			System.out.println(dp[n]);
+		}
 		
-		int[] dp = new int[11];
+		
+	}
+	
+	public static int[] arr() {
 		dp[1] = 1;
 		dp[2] = 2;
 		dp[3] = 4;
 		
-		for(int i=1; i<=T; i++) {
-			int n = Integer.parseInt(br.readLine());
-			
-			if(n <= 3) System.out.println(dp[n]);
-			else {
-				for(int k=4; k<=n; k++) {
-					dp[k] = dp[k-1] + dp[k-2] + dp[k-3];
-				}
-				System.out.println(dp[n]);
-			}	
+		for(int i=4; i<=10; i++) {
+			dp[i] = dp[i-1] + dp[i-2] + dp[i-3];
 		}
-
+		return dp;
 	}
 }
