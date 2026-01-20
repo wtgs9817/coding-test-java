@@ -1,10 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
-	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -14,25 +14,34 @@ public class Main {
 		int M = Integer.parseInt(st.nextToken());
 		
 		int[] arr = new int[N];
+		
 		st = new StringTokenizer(br.readLine());
-		for(int i=0; i<arr.length; i++) {
+		for(int i=0; i<N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		int left = 0;
-		int right = 0;
-		
-		int sum = 0;
-		int cnt = 0;
+		int s = 0,e=0,sum = 0;
+		int count =0;
 		
 		while(true) {
-			if(sum >= M) sum-=arr[left++];
-			else if(N == right) break;
-			else sum += arr[right++];
+			if(sum >= M) {
+				sum -= arr[s++];
+			}
 			
-			if(sum == M ) cnt++;
+			else if(e == N) break;
+			
+			else {
+				sum += arr[e++];
+			}
+			
+			if(sum == M) count++;
 		}
 		
-		System.out.println(cnt);
+		System.out.println(count);
+		
+		
+		
+		
 	}
+
 }
