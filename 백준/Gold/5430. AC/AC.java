@@ -7,13 +7,14 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		
 		int N = Integer.parseInt(br.readLine());
-		
+	
 		int cnt = 0;
 		while(cnt < N) {
 			ArrayDeque<Integer> que = new ArrayDeque<>();
-			StringBuilder sb = new StringBuilder();
+			
 			
 			String method = br.readLine();
 			int len = Integer.parseInt(br.readLine());
@@ -35,7 +36,7 @@ public class Main {
 				else {
 					if(que.isEmpty()) {
 						error = true;
-						sb.append("error");
+						sb.append("error").append("\n");
 						break;
 					}
 					
@@ -44,19 +45,16 @@ public class Main {
 				}
 			}
 			
-			if(error) System.out.println(sb);
-			else {
+			if(!error) {
 				sb.append("[");
 				while(!que.isEmpty()) {
 					sb.append(flag ? que.pollLast() : que.pollFirst());
 					if(!que.isEmpty()) sb.append(",");
 				}
-				sb.append("]");
-
-				System.out.println(sb);
+				sb.append("]").append("\n");
 			}
 			cnt++;
-			
 		}
+		System.out.println(sb);
 	}
 }
