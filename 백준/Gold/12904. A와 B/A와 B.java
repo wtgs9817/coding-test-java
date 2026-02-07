@@ -1,45 +1,30 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.*;
 
-public class Main {  //다시 풀어보기
-	
+public class Main {
+
 	public static void main(String[] args)throws IOException {
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
 		String S = br.readLine();
 		String T = br.readLine();
 		
-		boolean flag = false;
 		StringBuilder sb = new StringBuilder();
 		sb.append(T);
 		
-		int idx = T.length()-1;
-		while(idx >= 0) {
-			
-			if(String.valueOf(sb).equals(S)) {
-				flag = true;
-				break;
+		while(sb.length() > S.length()) {
+			if(sb.charAt(sb.length()-1) == 'A') {
+				sb.deleteCharAt(sb.length()-1);
 			}
-			
-			if(sb.charAt(idx) == 'A') {
-				sb.deleteCharAt(idx);
-			}
-			
 			else {
-				sb.deleteCharAt(idx);
+				sb.deleteCharAt(sb.length()-1);
 				sb.reverse();
 			}
-			
-			idx--;
 		}
-			
+		T = String.valueOf(sb);
 		
-		if(flag) System.out.println(1);
+		if(T.equals(S)) System.out.println(1);
 		else System.out.println(0);
-		
-		
 	}
-
 }
