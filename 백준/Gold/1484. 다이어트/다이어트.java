@@ -3,34 +3,42 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/*
+  G -> 현재 몸무게^2 - 기억하고 있는 몸무게^2
+  G는 100,000보다 작거나 같은 자연수	
+  범위 잘보고 문제 잘 읽고 풀기
+ */
 public class Main {
-	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int N = Integer.parseInt(br.readLine());
-		int n1 = 1;  //생각하는 몸무게
-		int n2 = 2;  //현재 몸무게
-		List<Integer> list = new ArrayList<>();
+		int G = Integer.parseInt(br.readLine());
+		List<Long> list = new ArrayList<>();
+
+		long start = 1;
+		long end = 2;
 		
-		while(n1 < n2) {
-			int ans = n2*n2 - n1*n1;
+		
+		while(true) {
+			long s = (long) Math.pow(start, 2);
+			long e = (long) Math.pow(end, 2);
+			if((end-start) == 1 && e-s > G ) break;
+			long result = e-s;
+
+			if(result == G) {
+				list.add(end);
+				start++;
+				end++;	
+			}
 			
-			if(ans == N) {
-				list.add(n2);
-				n2++;
-				n1++;
-			}
-			else if(ans < N) {
-				n2++;
-			}
-			else n1++;
+			else if(result < G) end++;
+			else start++;
 		}
 		
 		if(list.isEmpty()) System.out.println(-1);
 		else {
-			for(int a : list) System.out.println(a);
+			Collections.sort(list);
+			for(long a : list) System.out.println(a);
 		}
 	}
-
 }
