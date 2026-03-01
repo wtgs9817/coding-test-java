@@ -1,72 +1,68 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
-
+//복습
 public class Main {
-	//상 하 좌 우
-	static int[] X = {0,0,-1,1};
-	static int[] Y = {-1,1,0,0};
+	//동 서 남 북
+	static int[] dirX = {1,-1,0,0};
+	static int[] dirY = {0,0,1,-1};
 	
-	
-	static int N,M,K;
-	static int[][] map;
-	static Queue<int[]> que;
-	static boolean[][] visited;
 	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int t = Integer.parseInt(br.readLine());
 		
-		for(int i=0; i<t; i++) {
+		int T = Integer.parseInt(br.readLine());
+		
+		for(int i=0; i<T; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			M = Integer.parseInt(st.nextToken()); // 가로
-			N = Integer.parseInt(st.nextToken()); // 세로
-			K = Integer.parseInt(st.nextToken());
+			ArrayDeque<int[]> que = new ArrayDeque<>();
 			
-			map = new int[N][M];
-			que = new ArrayDeque<>();
-			visited = new boolean[N][M];
-	
-			int count = 0;
-			for(int z=0; z<K; z++) {
+			int result = 0;
+			
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+			int k = Integer.parseInt(st.nextToken());
+			
+			int[][] arr = new int[y][x];
+			boolean[][] visited = new boolean[y][x];
+			
+			for(int q=0; q<k; q++) {
 				st = new StringTokenizer(br.readLine());
 				
-				int x = Integer.parseInt(st.nextToken());
-				int y = Integer.parseInt(st.nextToken());
-				map[y][x] = 1;
-				que.offer(new int[] {y,x});
+				int xx = Integer.parseInt(st.nextToken());
+				int yy = Integer.parseInt(st.nextToken());
+				
+				arr[yy][xx] = 1;
+				que.offer(new int[]{yy,xx});
 			}
 			
-			for(int[] arr : que) {
-				int lx = arr[1];
-				int ly = arr[0];
+			for(int[] loc : que) {
+				int xx = loc[1];
+				int yy = loc[0];
 				
-				if(!visited[ly][lx]) {
-					search(ly, lx);
-					count++;
+				if(arr[yy][xx] == 1 && !visited[yy][xx]) {
+					search(xx, yy, visited, arr);
+					result++;
 				}
 			}
-		
-			System.out.println(count);
+			System.out.println(result);
 		}
 	}
 	
-	public static void search(int y, int x) {
-		visited[y][x] = true;
+	static void search(int xx, int yy, boolean[][] visited, int[][] arr) {
+		visited[yy][xx] = true;
 		
 		for(int i=0; i<4; i++) {
-			int dx = x + X[i];
-			int dy = y + Y[i];
+			int lx = xx + dirX[i];
+			int ly = yy + dirY[i];
 			
-			if(dx < 0 || dx >= M || dy < 0 || dy >=N) continue;
-			if(map[dy][dx] == 1 && !visited[dy][dx]) {
-				search(dy,dx);
+			if(lx < 0 || lx >= arr[0].length  || ly < 0 || ly >=arr.length) continue;
+			
+			if(arr[ly][lx] == 1 && !visited[ly][lx]) {
+				visited[ly][lx] = true;
+				search(lx, ly, visited, arr);
 			}
 		}
-
 	}
-
 }
