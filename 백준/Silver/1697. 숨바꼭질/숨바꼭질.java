@@ -1,42 +1,41 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
-
-
+//복습
 public class Main {
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		Queue<Integer> que = new ArrayDeque<>();
+		ArrayDeque<Integer> que = new ArrayDeque<>();
+		int[] move = {-1,1,2};
 		
-		int[] move = {-1, 1, 2};
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		
+		int N = Integer.parseInt(st.nextToken()); //수빈
+		int K = Integer.parseInt(st.nextToken()); //동싱
 		
 		int[] visited = new int[100001];
+		visited[N] = 1;
 		que.offer(N);
 		
 		while(!que.isEmpty()) {
-			int n = que.poll();
+			int subin = que.poll();
 			
-			if(n == M) break;
+			if(subin == K) break;
 			
-			for(int i=0; i<3; i++) {
-				int n2 = n;
-				if(move[i] > 1) n2 *= move[i];
-				else n2 += move[i];
-				
-				if(n2 >= 0 && n2 <=100000 && visited[n2] == 0 && n2 != N) {
-					visited[n2] = visited[n] + 1;
-					que.offer(n2);
+			for(int i=0; i<move.length; i++) {
+				int a = subin;
+				if(i==2) {
+					a *= move[i];
 				}
-			}		
+				else a += move[i];
+				
+				if(a >= 0 && a<=100000 && visited[a] == 0) {
+					que.offer(a);
+					visited[a] = (visited[subin] + 1);
+				}
+			}					
 		}
 		
-		System.out.println(visited[M]);
-		
+		System.out.println(visited[K] - 1);
+				
 	}
 }
