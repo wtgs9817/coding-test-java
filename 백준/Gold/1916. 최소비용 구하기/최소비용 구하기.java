@@ -1,22 +1,17 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
+
 
 public class Main {
-	public static List<Node>[] list;
-	public static int[] dist;
-	public static PriorityQueue<Node> pq = new PriorityQueue<>();
-	
-	
 	public static void main(String[] args)throws IOException {
+		PriorityQueue<int[]> que = new PriorityQueue<>((a,b) -> (a[1] - b[1]));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int N = Integer.parseInt(br.readLine());
 		int M = Integer.parseInt(br.readLine());
-		
-		list = new ArrayList[N+1];
-		dist = new int[N+1];
+		ArrayList<int[]>[] list = new ArrayList[N+1];
+		int[] dist = new int[N+1];
+		boolean[] visited = new boolean[N+1];
 		
 		for(int i=1; i<=N; i++) {
 			list[i] = new ArrayList<>();
@@ -26,70 +21,41 @@ public class Main {
 		StringTokenizer st;
 		for(int i=0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int start = Integer.parseInt(st.nextToken());
-			int end = Integer.parseInt(st.nextToken());
-			int cost = Integer.parseInt(st.nextToken());
 			
-			list[start].add(new Node(end, cost));
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
+			int w = Integer.parseInt(st.nextToken());
 			
+			list[s].add(new int[] {e,w});
 		}
 		st = new StringTokenizer(br.readLine());
 		
-		int point1 = Integer.parseInt(st.nextToken());
-		int point2 = Integer.parseInt(st.nextToken());
+		int s = Integer.parseInt(st.nextToken());
+		int e = Integer.parseInt(st.nextToken());
 		
-		pq.offer(new Node(point1, 0));
-		dist[point1] = 0;
+		dist[s] = 0;
+		que.offer(new int[] {s,0});
 		
-		int answer = minSearch(point1, point2);
-		System.out.println(answer);
-	}
-	
-	public static int minSearch(int point1, int point2) {
-		
-		while(!pq.isEmpty()) {
-			Node node = pq.poll();
+		while(!que.isEmpty()) {
+			int[] arr = que.poll();
 			
-			int nowPoint = node.end;
-			int nowCost = node.cost;
 			
-			if(nowPoint == point2) return dist[nowPoint];
+			int n = arr[0];
+			int c = arr[1];
+			if(visited[n]) continue;
+			visited[n] = true;
 			
-			for(Node n : list[nowPoint]) {
-				int totalCost = dist[nowPoint] + n.cost;
-				if(dist[n.end] > totalCost ) {
-					dist[n.end] = totalCost;
-					pq.offer(new Node(n.end, totalCost));
+			for(int[] num : list[n]) {
+				int n2 = num[0];  
+				int n3 = num[1];  
+				
+				if(!visited[n2] && dist[n2] > c + n3 ) {
+					dist[n2] = c+n3;
+					que.offer(new int[] {n2, dist[n2]});
 				}
-				else continue;
 			}
 		}
 		
-		return dist[point2];	
+		System.out.println(dist[e]);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	static class Node implements Comparable<Node>{
-		int end;
-		int cost;
-		
-		public Node(int end, int cost) {
-			this.end = end;
-			this.cost = cost;
-		}
-
-		@Override
-		public int compareTo(Node o) {
-			return Integer.compare(this.cost, o.cost);
-		}
-	}
-	
-	
 }
