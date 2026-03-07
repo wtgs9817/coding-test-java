@@ -42,6 +42,8 @@ public class Main {
 			
 			int n = arr[0];
 			int c = arr[1];
+			
+			if(n == e) break;
 			if(visited[n]) continue;
 			visited[n] = true;
 			
