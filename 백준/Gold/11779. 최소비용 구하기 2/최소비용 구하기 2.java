@@ -72,21 +72,20 @@ public class Main {
 		
 		int ds = e;
 		int cnt = 0;
-		ArrayList<Integer> result = new ArrayList<>();
-		result.add(ds);
+		//자바 스택의 모든 메서드에는 synchronized가 붙어있어 동기화 오버헤드 존재 
+		ArrayDeque<Integer> stack = new ArrayDeque<>();
+		stack.push(ds);
 		while(true) {			
-			
 			int num = prev[ds];
 			if(num == 0 ) break;
-			result.add(num);
+			stack.push(num);
 			ds = num;
 			cnt++;			
 		}
 		
-		Collections.reverse(result);
-		
-		for(int node : result) {
-			sb.append(node).append(" ");
+		while(!stack.isEmpty()) {
+			int a = stack.pop();
+			sb.append(a).append(" ");
 		}
 		
 		
