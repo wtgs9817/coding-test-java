@@ -1,73 +1,60 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
+import java.io.*;
 
-import java.util.StringTokenizer;
 
 public class Main {
-	
-	
-	public static int N;
-	public static int[][] arr;
-	public static boolean[][] visited;
-	
 	//상 하 좌 우
-	public static int[] X = {0, 0, -1, 1};
-	public static int[] Y = {-1, 1, 0, 0};
+	static int[] X = {0,0,-1,1};
+	static int[] Y = {-1,1,0,0};
 	
-	
+	static int n;
+	static int[][] map;
+	static boolean[][] visited;
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		N = Integer.parseInt(br.readLine());
-		StringTokenizer st;
+		n = Integer.parseInt(br.readLine());
+		map = new int[n][n];
+		visited = new boolean[n][n];
+		
+		int result = 0;
 		int max = 0;
-		
-		arr = new int[N][N];
-		int answer = 0;
-		
-		for(int i=0; i<N; i++) {
-			st = new StringTokenizer(br.readLine());
-			for(int k=0; k<N; k++) {
-				arr[i][k] = Integer.parseInt(st.nextToken());
-				max = Math.max(max,arr[i][k]);
+		for(int i=0; i<n; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for(int k=0; k<n; k++) {
+				map[i][k] = Integer.parseInt(st.nextToken());
+				max = Math.max(max, map[i][k]);
 			}
 		}
 		
-		for(int i=0; i<=max; i++) {
+		for(int a = 0; a<=max; a++) {
+			visited = new boolean[n][n];
 			int cnt = 0;
-			visited = new boolean[N][N];
-			for(int k=0; k<N; k++) {
+			for(int i=0; i<n; i++) {
 				
-				for(int z=0; z<N; z++) {
-					if(!visited[k][z] && i < arr[k][z]) {
-						dfs(k, z, i);
+				for(int k=0; k<n; k++) {
+					if(!visited[i][k] && map[i][k] > a) {
+						safeArea(i, k, a);
 						cnt++;
-					}		
-				}
+					}
+				}		
 			}
-			answer = Math.max(answer, cnt);	
-			
+			result = Math.max(result, cnt);
 		}
-		
-		System.out.println(answer);
-	}
+		System.out.println(result);
+ 	}
 	
-	public static void dfs(int y, int x, int rain) {
-		visited[y][x] = true;  
-		
+	static void safeArea(int y, int x, int h) {
+		visited[y][x] = true;
 		
 		for(int i=0; i<4; i++) {
-			int dx = x + X[i];
 			int dy = y + Y[i];
+			int dx = x + X[i];
 			
-			if(dx < 0 || dx >= N || dy < 0 || dy >= N) continue;
+			if(dy < 0 || dy >= n || dx < 0 || dx >= n) continue;
+			if(visited[dy][dx] || map[dy][dx] <= h) continue;
 			
-			if(!visited[dy][dx] && rain < arr[dy][dx]) {
-				dfs(dy, dx, rain);
-			}			
+			safeArea(dy, dx, h);
 		}
 	}
-		
-
 }
