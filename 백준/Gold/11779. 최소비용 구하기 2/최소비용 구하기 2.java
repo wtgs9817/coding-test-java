@@ -1,97 +1,92 @@
 import java.util.*;
 import java.io.*;
 
-
 /*
-  도시 최대 1000개
-  한 도시 출발 다른 도시 도착하는 버스 최대 100,000개
+ n개의 도시(1<=n<=1000)
+ m개의 간선(1<=m<=100000) 2차원 배열로 하면 터짐
+ 제시되는 A에서 B로 가는 최소 비용을 구해라 항상 시작점에서 도착점으로 가는 경로는 존재함.
   
-  
- 
+  복습
  */
 public class Main {
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		PriorityQueue<int[]> q = new PriorityQueue<>((a,b) -> (a[1]-b[1]));
 		
-		int N = Integer.parseInt(br.readLine());
-		int M = Integer.parseInt(br.readLine());
-		StringBuilder sb = new StringBuilder();
-		
-		int[] dist = new int[N+1];
-		boolean[] visited = new boolean[N+1];
-		ArrayList<int[]>[] list = new ArrayList[N+1];
-		PriorityQueue<int[]> que = new PriorityQueue<>((a,b) -> (a[1] - b[1]));
-		
-		StringTokenizer st;
-		int[] prev = new int[N+1];
-		
-		for(int i=1; i<=N; i++) {
-			list[i] = new ArrayList<>();
-			dist[i] = Integer.MAX_VALUE;
-		}
+		int n = Integer.parseInt(br.readLine());
+		int m = Integer.parseInt(br.readLine());
 		
 		
-		for(int i=0; i<M; i++) {
-			st = new StringTokenizer(br.readLine());
-			
+		ArrayList<int[]>[] list = new ArrayList[n+1];
+	    int[] dist = new int[n+1];
+	    boolean[] visited = new boolean[n+1];
+	    
+	    for(int i=1; i<=n; i++) {
+	    	dist[i] = Integer.MAX_VALUE;
+	    	list[i] = new ArrayList<>();	    	
+	    }
+		
+		for(int i=0; i<m; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
 			
 			list[s].add(new int[] {e,w});
 		}
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		st = new StringTokenizer(br.readLine());
 		int s = Integer.parseInt(st.nextToken());
 		int e = Integer.parseInt(st.nextToken());
 		
-		que.offer(new int[] {s,0});
-		dist[s] = 0;
+		q.offer(new int[] {s,0});
 		
-		while(!que.isEmpty()) {
-			int[] arr = que.poll();
+		int[] arr = new int[n+1];
+		while(!q.isEmpty()) {
+			int[] loc = q.poll();
 			
-			int a = arr[0]; 
-			int b = arr[1];
+			int n1 = loc[0];
+			int w1 = loc[1];
 			
-			if(a == e) break;
-			if(visited[a]) continue;
-			visited[a] = true;
+			if(n1 == e) break;
+			if(visited[n1]) continue;
 			
-			for(int[] n : list[a]) {
-				int a2 = n[0];
-				int b2 = n[1];
+			visited[n1] = true;
+			
+			for(int[] node : list[n1]) {
+				int n2 = node[0];
+				int w2 = node[1];
 				
-				if(!visited[a2] && dist[a2] > b2 + b) {
-					dist[a2] = b2+b;
-					que.offer(new int[] {a2, dist[a2]});
-					prev[a2] = a;
-				}
-			}		
+				if(!visited[n2] && dist[n2] > w1 + w2) {
+					dist[n2] = w1+w2;
+					q.offer(new int[] {n2, dist[n2]});
+					arr[n2] = n1;
+				}				
+			}
 		}
 		
-		int ds = e;
-		int cnt = 0;
-		//자바 스택의 모든 메서드에는 synchronized가 붙어있어 동기화 오버헤드 존재 
-		ArrayDeque<Integer> stack = new ArrayDeque<>();
-		stack.push(ds);
-		while(true) {			
-			int num = prev[ds];
-			if(num == 0 ) break;
-			stack.push(num);
-			ds = num;
-			cnt++;			
+		StringBuilder sb = new StringBuilder();
+		ArrayDeque<Integer> stk = new ArrayDeque<>();
+		sb.append(dist[e]).append("\n");
+		
+		stk.push(e);
+		int cnt =1;
+		int node = e;
+		while(true) {
+			int a = arr[node];
+			
+			if(a == 0) break;
+			stk.push(a);
+			node = a;
+			cnt++;	
 		}
 		
-		while(!stack.isEmpty()) {
-			int a = stack.pop();
+		sb.append(cnt).append("\n");
+		
+		for(int a : stk) {
 			sb.append(a).append(" ");
 		}
 		
-		
-		System.out.println(dist[e]);
-		System.out.println(cnt+1);
 		System.out.println(sb);
 	}
-
 }
