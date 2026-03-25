@@ -7,26 +7,29 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int N = Integer.parseInt(br.readLine());
-		int[] arr = new int[N];
-		StringBuilder sb = new StringBuilder();
+		int[] top = new int[N+1];
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(int i=0; i<N; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
+		ArrayDeque<int[]> q = new ArrayDeque<>();
+		
+		for(int i=1; i<=N; i++) {
+			int n = Integer.parseInt(st.nextToken());
+			top[i] = n;
 		}
-		
-		Stack<int[]> stk = new Stack<>();	
-		
-		for(int i=0; i<N; i++) {
-			while(!stk.isEmpty() && stk.peek()[0] < arr[i]) {
-				stk.pop();
+		int[] arr = new int[N+1];
+		for(int i=1; i<=N; i++) {
+			int n = top[i];
+			while(!q.isEmpty()) {
+				if(q.peek()[0] < n) q.pop();
+				else {
+					arr[i] = q.peek()[1];
+					break;
+				}
 			}
-			
-			if(stk.isEmpty()) sb.append("0 ");
-			else sb.append(stk.peek()[1] + 1).append(" ");
-			
-			stk.push(new int[] {arr[i], i});
+			q.push(new int[] {n, i});
 		}
-
+		StringBuilder sb = new StringBuilder();
+		for(int i=1; i<=N; i++) sb.append(arr[i]).append(" ");
+		
 		System.out.println(sb);
 	}
 }
