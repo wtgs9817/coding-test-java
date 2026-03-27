@@ -1,90 +1,83 @@
 import java.util.*;
 import java.io.*;
 
-/*
- n개의 도시(1<=n<=1000)
- m개의 간선(1<=m<=100000) 2차원 배열로 하면 터짐
- 제시되는 A에서 B로 가는 최소 비용을 구해라 항상 시작점에서 도착점으로 가는 경로는 존재함.
-  
-  복습
- */
+//복습
+//다익스트라에 대해서 정확히 이해했지만 사소한 실수로 자꾸 틀림. 문제 풀 때 확인 잘 해야할듯
+
 public class Main {
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		PriorityQueue<int[]> q = new PriorityQueue<>((a,b) -> (a[1]-b[1]));
 		
 		int n = Integer.parseInt(br.readLine());
 		int m = Integer.parseInt(br.readLine());
 		
-		
 		ArrayList<int[]>[] list = new ArrayList[n+1];
-	    int[] dist = new int[n+1];
-	    boolean[] visited = new boolean[n+1];
-	    
-	    for(int i=1; i<=n; i++) {
-	    	dist[i] = Integer.MAX_VALUE;
-	    	list[i] = new ArrayList<>();	    	
-	    }
+		boolean[] visited = new boolean[n+1];
+		PriorityQueue<int[]> que = new PriorityQueue<>((a,b)-> (a[1]-b[1]));
+		int[] dist = new int[n+1];
 		
+		for(int i=1; i<=n; i++) {
+			list[i] = new ArrayList<>();
+			dist[i] = Integer.MAX_VALUE;
+		}
+		StringTokenizer st ;
 		for(int i=0; i<m; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
+			st = new StringTokenizer(br.readLine());
+			
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
 			
 			list[s].add(new int[] {e,w});
 		}
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		st = new StringTokenizer(br.readLine());
 		
 		int s = Integer.parseInt(st.nextToken());
 		int e = Integer.parseInt(st.nextToken());
 		
-		q.offer(new int[] {s,0});
+		dist[s] = 0;
+		int[] save = new int[n+1];
 		
-		int[] arr = new int[n+1];
-		while(!q.isEmpty()) {
-			int[] loc = q.poll();
+		que.offer(new int[] {s,0});
+		
+		while(!que.isEmpty()) {
+			int[] arr = que.poll();
 			
-			int n1 = loc[0];
-			int w1 = loc[1];
+			int node = arr[0];
+			int w = arr[1];
 			
-			if(n1 == e) break;
-			if(visited[n1]) continue;
+			if(visited[node]) continue;
+			if(node == e) break;
+			visited[node] = true;
 			
-			visited[n1] = true;
-			
-			for(int[] node : list[n1]) {
-				int n2 = node[0];
-				int w2 = node[1];
+			for(int[] arr2 : list[node]) {
+				int node2 = arr2[0];
+				int w2 = arr2[1];
 				
-				if(!visited[n2] && dist[n2] > w1 + w2) {
-					dist[n2] = w1+w2;
-					q.offer(new int[] {n2, dist[n2]});
-					arr[n2] = n1;
-				}				
+				if(!visited[node2] && dist[node2] > w + w2) {
+					dist[node2] = w + w2;
+					que.offer(new int[] {node2, dist[node2]});
+					save[node2] = node;
+				}
 			}
 		}
+		ArrayDeque<Integer> q = new ArrayDeque<>();
+		int fe = e;
+		q.push(fe);
+		while(true) {
+			if(save[fe] == 0) break;
+			q.push(save[fe]);
+			fe = save[fe];
+		}
+		int cnt = q.size();
 		
 		StringBuilder sb = new StringBuilder();
-		ArrayDeque<Integer> stk = new ArrayDeque<>();
 		sb.append(dist[e]).append("\n");
-		
-		stk.push(e);
-		int cnt =1;
-		int node = e;
-		while(true) {
-			int a = arr[node];
-			
-			if(a == 0) break;
-			stk.push(a);
-			node = a;
-			cnt++;	
-		}
-		
 		sb.append(cnt).append("\n");
 		
-		for(int a : stk) {
-			sb.append(a).append(" ");
+		while(!q.isEmpty()) {
+			sb.append(q.pop()).append(" ");
 		}
 		
 		System.out.println(sb);
