@@ -3,71 +3,79 @@ import java.io.*;
 
 
 public class Main {
-	static int n,m;
+	static int N;
+	static int M;
 	static ArrayList<int[]>[] list;
 	static StringBuilder sb = new StringBuilder();
 	
 	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		n = Integer.parseInt(br.readLine());
-		m = Integer.parseInt(br.readLine());
-		list = new ArrayList[n+1];
+		N = Integer.parseInt(br.readLine());
+		M = Integer.parseInt(br.readLine());
+		list = new ArrayList[N+1];
 		
-		
-		
-		for(int i=1; i<=n; i++) {
+		for(int i=1; i<=N; i++) {
 			list[i] = new ArrayList<>();
 		}
+		StringTokenizer st;
 		
-		for(int i=0; i<m; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int e = Integer.parseInt(st.nextToken());
+		for(int i=0; i<M; i++) {
+			st = new StringTokenizer(br.readLine());
+			
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
 			int w = Integer.parseInt(st.nextToken());
 			
-			list[s].add(new int[] {e,w});
+			list[a].add(new int[] {b,w});
 		}
 		
-		for(int i=1; i<=n; i++) {
-			min(i);
+		for(int i=1; i<=N; i++) {
+			search(i);
 		}
 		
-		System.out.println(sb);		
+		System.out.println(sb);
+		
 	}
 	
-	static void min(int num) {
-		boolean[] visited = new boolean[n+1];
-		int[] dist = new int[n+1];
-		
-		for(int i=1; i<=n; i++) dist[i] = Integer.MAX_VALUE;
+	static void search(int i) {
 		PriorityQueue<int[]> que = new PriorityQueue<>((a,b)-> a[1]-b[1]);
+		boolean[] visited = new boolean[N+1];
+		int[] dist = new int[N+1];
 		
-		que.offer(new int[] {num, 0});
+		for(int k=1; k<=N; k++) {
+			dist[k] = Integer.MAX_VALUE;
+		}
+		dist[i] = 0;
+		
+		
+		que.offer(new int[] {i,0});
 		
 		while(!que.isEmpty()) {
 			int[] arr = que.poll();
-			int s = arr[0];
-			int w = arr[1];
 			
-			if(visited[s]) continue;
-			visited[s] = true;
+			int n1 = arr[0];
+			int w1 = arr[1];
 			
-			for(int[] node : list[s]) {
-				int s2 = node[0];
-				int w2 = node[1];
+			if(visited[n1]) continue;
+			visited[n1] = true;
+			
+			for(int[] narr : list[n1]) {
+				int n2 =narr[0];
+				int w2 = narr[1];
 				
-				if(!visited[s2] && dist[s2] > w2 + w) {
-					dist[s2] = w2 + w;
-					que.offer(new int[] {s2, dist[s2]});
+				if(!visited[n2] && dist[n2] > w1 + w2 ) {
+					dist[n2] = w1 + w2;
+					que.offer(new int[] {n2, dist[n2]});
 				}
 			}
 		}
 		
-		for(int i=1; i<=n; i++) {
-			if(dist[i] == Integer.MAX_VALUE) sb.append(0).append(" ");
-			else sb.append(dist[i]).append(" ");
+		for(int k=1; k<=N; k++) {
+			if(dist[k] == Integer.MAX_VALUE) dist[k] = 0;
+			sb.append(dist[k]);
+			if(k<N) sb.append(" ");
 		}
-		sb.append("\n");	
+		sb.append("\n");		
 	}
 }
