@@ -1,33 +1,36 @@
 import java.util.*;
 
+//복습
 class Solution {
-    static Map<String, PriorityQueue<String>> graph = new HashMap<>();
-    static LinkedList<String> answer = new LinkedList<>();
     
     public String[] solution(String[][] tickets) {
+        Map<String, PriorityQueue<String>> map = new HashMap<>();
+        LinkedList<String> lq = new LinkedList<>(); 
         
-        for(String[] ticket : tickets) {
-            String from = ticket[0];
-            String to = ticket[1];
+        for(String[] arr : tickets) {
+            String fr = arr[0];
+            String to = arr[1];
             
-            if(graph.get(from) == null) {
-                graph.put(from, new PriorityQueue<>());
-                graph.get(from).add(to);
+            if(map.get(fr) == null) {
+                map.put(fr, new PriorityQueue<>());
+                map.get(fr).add(to);
             }
-            else graph.get(from).add(to);
+            else map.get(fr).add(to);
         }
         
-        dfs("ICN");
-        return answer.toArray(new String[0]);
+        dfs("ICN", map, lq);
+        return lq.toArray(new String[0]);
+        
+        
     }
-    
-    public void dfs(String airport) {
-        PriorityQueue<String> des = graph.get(airport);
+    public void dfs(String airport, Map<String, PriorityQueue<String>> map, LinkedList<String> lq) {
+        PriorityQueue<String> que = map.get(airport);
         
-        while(des != null && !des.isEmpty()) {
-            String next = des.poll();
-            dfs(next);
+        while(que != null && !que.isEmpty()) {
+            String airport2 = que.poll();
+            dfs(airport2, map, lq);
         }
-        answer.addFirst(airport);
+        
+        lq.addFirst(airport);
     }
 }
