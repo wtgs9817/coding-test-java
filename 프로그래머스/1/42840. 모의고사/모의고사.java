@@ -1,92 +1,28 @@
-// 첫번째 풀이
-// 두번째 풀이
 import java.util.*;
+
 class Solution {
     public int[] solution(int[] answers) {
-        int[][] s = {{1,2,3,4,5},
-                     {2,1,2,3,2,4,2,5},
-                     {3,3,1,1,2,2,4,4,5,5}};
+        int[][] nums = {{1,2,3,4,5},{2,1,2,3,2,4,2,5}, {3,3,1,1,2,2,4,4,5,5}};
         
-        List<Integer> list = new ArrayList<>();
-        int[] score = new int[s.length];
-        for(int i=0; i<s.length; i++) {
-            int count = 0;
+        int[] score = new int[3];
+        
+        for(int i=0; i<3; i++) {
             for(int k=0; k<answers.length; k++) {
-                if(s[i][k % s[i].length] == answers[k]) {
-                    count++;      
-                }
-                score[i] = count;
-            }    
-        }
-        
-        int maxScore = Math.max(score[0], Math.max(score[1], score[2]));
-        
-        for(int i=0; i<score.length; i++) {
-            if(maxScore == score[i]) {
-                list.add(i+1);
+                if(answers[k] == nums[i][k % nums[i].length]) score[i]++;
             }
         }
         
-        int[] answer = new int[list.size()];
+        int max = Math.max(score[0], Math.max(score[1],score[2]));
         
-        for(int i=0; i<list.size(); i++) {
-            answer[i] = list.get(i);
-        }
-        
-        return answer;
-        
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*
-        
-        int[][] s = {{1,2,3,4,5},{2,1,2,3,2,4,2,5},{3,3,1,1,2,2,4,4,5,5}};
         List<Integer> list = new ArrayList<>();
-        int[] score = new int[s.length];
-        
-        for(int i=0; i<s.length; i++) {
-            int count = 0;
-            for(int k =0; k<answers.length; k++) {
-                if(answers[k] == s[i][k % s[i].length]) {
-                    count++;
-                }
-            }
-            score[i] = count;
-        }
-        
-        int maxCount = Math.max(score[0], Math.max(score[1], score[2]));
-        
-        for(int i=0; i<score.length; i++) {
-            if(score[i] == maxCount) {
-                list.add(i+1);
-            }
+        for(int i=0; i<3; i++) {
+            if(score[i] == max) list.add(i+1);
         }
         
         int[] answer = new int[list.size()];
-        
-        for(int i=0; i<list.size(); i++) {
-            answer[i] = list.get(i);
-        }
-        
+        int cnt = 0;
+        for(int a : list) answer[cnt++] = a; 
         
         return answer;
-        
-        */
     }
-    
-   
-    
-    
-    
-    
-    
-}
+ }
