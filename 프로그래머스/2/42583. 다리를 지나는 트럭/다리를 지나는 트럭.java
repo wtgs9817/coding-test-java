@@ -1,29 +1,30 @@
 import java.util.*;
 
+//복습
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        ArrayDeque<Integer> que = new ArrayDeque<>(bridge_length);
-        int time = 0;
+        ArrayDeque<Integer> de = new ArrayDeque<>(bridge_length);
         int current = 0;
+        int time = 0;
         
-        for(int truck : truck_weights) {
-            while(true) {
-                if(que.size() == bridge_length) {
-                    current -= que.poll();    
-                }
-                if(current + truck <= weight) {
-                    current+=truck;
-                    que.offer(truck);
-                    time++;
-                    break;
-                }
-                else {
-                    que.offer(0);
-                    time++;
-                }
+        int truck_idx = 0;
+        for(int i=0; i<bridge_length; i++) de.offer(0);
+        
+        while(truck_idx < truck_weights.length) {
+            int n = truck_weights[truck_idx];
+            current -= de.poll(); 
+            
+            if(current + n <= weight) {
+                de.offer(n);
+                current+=n;
+                truck_idx++;
             }
+            else de.offer(0);
+            
+            time++;
         }
         
         return time + bridge_length;
+        
     }
 }
