@@ -17,35 +17,27 @@ return : [4, 3, 1, 1, 0]
 5초의 주가는 3이며 5초 이후로는 데이터가 없으므로 총 0초간 주가를 유지했습니다.
 */
     
-    
-import java.util.*;    
+import java.util.*;
+//복습 해당 문제는 O(N) 으로 해결해야 함. 
 class Solution {
     public int[] solution(int[] prices) {
-        List<Integer> list = new ArrayList<>();
-        Queue<Integer> que = new ArrayDeque<>();
+        ArrayDeque<Integer> que = new ArrayDeque<>();
+        int len = prices.length;
+        int[] result = new int[len];
         
-        for(int n : prices) que.offer(n);
-        int idx = 0;
-        while(!que.isEmpty()) {
-            int num = que.poll();
-            int index = 0;
+        for(int i=0; i<len; i++) {
             
-            for(int i=idx; i<prices.length; i++) {
-                if(num > prices[i]) {
-                    index = i;
-                    break;
-                }
+            while(!que.isEmpty() && prices[i] < prices[que.peek()]) {
+                int idx = que.pop();
+                result[idx] = i - idx;
             }
-            if(index == 0) list.add((prices.length-1) - idx);            
-            else list.add(index - idx);
-            
-            idx++;
+            que.push(i);
         }
-        int[] result = new int[list.size()];
         
-        idx = 0;
-        for(int n : list) result[idx++] = n; 
-        
+        while(!que.isEmpty()) {
+            int idx = que.pop();
+            result[idx] = (len - 1) - idx;
+        }
         return result;
     }
 }
