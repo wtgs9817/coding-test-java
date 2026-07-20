@@ -1,64 +1,60 @@
+//복습
 /*
 1 ≤ users의 길이 = n ≤ 100
-users의 원소는 [비율, 가격]의 형태
-1 ≤ emoticons의 길이 = m ≤ 7 --> emoticons[i]는 i+1번 이모티콘의 정가를 의미
-플러스 가입자 늘리는 게 우선 그 다음 판매액
-할인율 10~40% -> 이모티콘마다 다를 수 있음
+users의 원소는 [비율, 가격]
+users[i]는 i+1번 고객의 구매 기준을 의미
+비율% 이상의 할인이 있는 이모티콘을 모두 구매한다는 의미
+가격이상의 돈을 이모티콘 구매에 사용한다면, 이모티콘 구매를 모두 취소하고 이모티콘 플러스 서비스에 가입한다는 의미
 
-문제 좀 제발 잘 읽고 하자
 */
 class Solution {
-    static int[] result = new int[2];
-    static int[] darr;
+    static int[] result;
     static int[] dis = {10, 20, 30, 40};
+    static int[] dis2;
+    
     public int[] solution(int[][] users, int[] emoticons) {
-        darr = new int[emoticons.length];
-        
-        dfs(0, users, emoticons);    
+        result = new int[2];
+        dis2 = new int[emoticons.length];
+        dfs(0, users, emoticons);
         
         return result;
     }
+    
     static void dfs(int depth, int[][] users, int[] emoticons) {
         if(depth == emoticons.length) {
-            int[] test = new int[2]; 
+            int[] em = new int[2];
+            
             for(int i=0; i<users.length; i++) {
                 int[] arr = users[i];
                 int a = arr[0]; //비율
                 int b = arr[1]; //가격
-                int ab = 0;
-                boolean flag = false;
                 
-                for(int k=0; k<darr.length; k++) {
-                    if(darr[k] >= a) {
-                        ab = ab + (emoticons[k] * (100 - darr[k]) / 100);
-                    }
-                    
-                    if(ab >= b) {
-                        test[0]++;
-                        flag = true;
-                        break;
+                int uTotal = 0;
+                
+                for(int k=0; k<dis2.length; k++) {
+                    if(a <= dis2[k]) {
+                        int per = (100 - dis2[k]);
+                        uTotal += (emoticons[k] * per) / 100; 
                     }
                 }
-                
-                if(!flag) test[1] += ab;
+                if(uTotal >= b){
+                    uTotal = 0;
+                    em[0]++;
+                }
+                else em[1] += uTotal;  
             }
             
-            if(result[0] == test[0]) {
-                if(result[1] < test[1]) {
-                    result[0] = test[0];
-                    result[1] = test[1];
-                }
-            }
-            else if(result[0] < test[0]) {
-                result[0] = test[0];
-                result[1] = test[1];    
+            if(result[0] < em[0]) result = em.clone();
+            else if(result[0] == em[0]) {
+                if(result[1] < em[1]) result = em.clone();
             }
             return;
         }
         
         for(int i=0; i<dis.length; i++) {
-            darr[depth] = dis[i];
+            dis2[depth] = dis[i];
             dfs(depth+1, users, emoticons);
+            dis2[depth] = 0;
         }
     }
 }
